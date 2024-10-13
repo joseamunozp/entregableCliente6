@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    //formulario con id contactos
+    <div id="contactos">
+        <form id="contacto-form">
+            <div class="input-group">
+                <label for="asunto">Asunto:</label>
+                <input type="text" id="asunto" name="asunto"  required>
+                <div id="asunto-error" class="error"></div>
+            </div>
+            <div class="input-group">
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required>
+                <div id="email-error" class="error"></div>
+            </div>
+            <div class="input-group">
+                <label for="mensaje">Mensaje:</label>
+                <textarea id="mensaje" name="mensaje" required></textarea>
+                <div id="mensaje-error" class="error"></div>
+            </div>
+            <button type="submit">Enviar</button>
+
+        </form>
+        </div>
+        <script>
+            const form = document.getElementById("contacto-form");
+            const asuntoInput = document.getElementById("asunto");
+            const emailInput = document.getElementById("email");
+            const mensajeInput = document.getElementById("mensaje");
+            function validarAsunto(){
+                const asunto = asuntoInput.value;
+                const errorAsunto = document.getElementById("asunto-error");
+                if(asunto.trim() === ""){
+                    errorAsunto.textContent = "El asunto es obligatorio";
+                    return false;
+                }else{
+                    errorAsunto.textContent = "";
+                    return true;
+                }
+            }
+            function validarEmail(){
+                const email = emailInput.value;
+                const errorEmail = document.getElementById("email-error");
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if(!emailRegex.test(email)){
+                    errorEmail.textContent = "El email es inválido";
+                    return false;
+                }else{
+                    errorEmail.textContent = "";
+                    return true;
+                }
+            }
+            function validarMensaje(){
+                const mensaje = mensajeInput.value;
+                const errorMensaje = document.getElementById("mensaje-error");
+                if(mensaje.trim() === ""){
+                    errorMensaje.textContent = "El mensaje es obligatorio";
+                    return false;
+                }else{
+                    errorMensaje.textContent = "";
+                    return true;
+                }
+            }
+            asuntoInput.addEventListener("blur", validarAsunto);
+            emailInput.addEventListener("blur", validarEmail);
+            mensajeInput.addEventListener("blur", validarMensaje);
+            form.addEventListener("submit", function(){
+                const asuntoValido=validarAsunto;
+                const emailValido=validarEmail;
+                const mensajeValido=validarMensaje;
+                if(!asuntoValido||!mensajeValido||!emailValido){
+                    event.preventDefault();
+                    alert("Por favor, corrija los errores del formulario");
+                }
+            });
+        </script>
+</body>
+</html>
